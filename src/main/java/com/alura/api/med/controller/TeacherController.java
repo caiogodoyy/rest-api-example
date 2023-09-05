@@ -1,7 +1,13 @@
 package com.alura.api.med.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +38,19 @@ public class TeacherController {
 
         var uri = uriBuilder.path("/teacher/{id}").buildAndExpand(teacher.getId()).toUri();
         return ResponseEntity.created(uri).body(new TeacherRegisterReturnBody(teacher));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<TeacherRegisterReturnBody>> listAllTeachers(Pageable pageable) {
+        var page = teacherRepository.findAllByActiveTrue(pageable).map(TeacherRegisterReturnBody::new);
+
+        return ResponseEntity.ok(page);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TeacherRegisterReturnBody> getTeacher(@PathVariable Long id) {
+        var teacher = teacherRepository.getReferenceById(id);
+        return ResponseEntity.ok(new TeacherRegisterReturnBody(teacher));
     }
 
 }
