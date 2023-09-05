@@ -52,4 +52,8 @@ public class Teacher {
         this.address = new Address(data.address());
     }
 
+    public void deactivate() {
+        this.active = false;
+    }
+
 }

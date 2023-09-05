@@ -1,11 +1,10 @@
 package com.alura.api.med.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,6 +50,15 @@ public class TeacherController {
     public ResponseEntity<TeacherRegisterReturnBody> getTeacher(@PathVariable Long id) {
         var teacher = teacherRepository.getReferenceById(id);
         return ResponseEntity.ok(new TeacherRegisterReturnBody(teacher));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> deactivateTeacher(@PathVariable Long id) {
+        var teacher = teacherRepository.getReferenceById(id);
+        teacher.deactivate();
+
+        return ResponseEntity.noContent().build();
     }
 
 }
