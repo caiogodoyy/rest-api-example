@@ -18,8 +18,8 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/register")
+public class RegisterController {
 
     @Autowired
     UserRepository userRepository;
@@ -32,7 +32,7 @@ public class UserController {
 
         userRepository.save(user);
 
-        var uri = uriBuilder.path("/teacher/{id}").buildAndExpand(user.getId()).toUri();
+        var uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).body(new UserRegisterData(user));
     }
 
