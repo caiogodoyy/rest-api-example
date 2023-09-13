@@ -13,17 +13,18 @@ O Spring Data JPA reconhecerá a convenção findBy e usará o restante do nome 
 Fluxo de autenticação:
 1. Cliente faz requisição POST no */login* fornecendo seus dados no corpo.
 2. No controller é criado um objeto *UsernamePasswordAuthenticationToken* com os dados fornecidos.
-3. O objeto *AuthenticationManager* instanciado com *@Autowired* é usado pra autenticar esse token. Internamente, o Spring Security usa o *UserDetailsService* que faz a verificação e retorna um objeto *UserDetails* que contém informações sobre o usuário.
-4. O controller chama o *TokenService* para criar um token de acesso e o retorna para o cliente armazenar e usá-lo nas solicitações futuras.
-5. O *SecurityConfigurations* define as regras de segurança para a aplicação.
+3. No *SecurityConfigurations* é criado e retornado um objeto *AuthenticationManager* por meio do método *@Bean* que chama *authenticationConfiguration.getAuthenticationManager()*, útil quando você precisa injetar um AuthenticationManager em outras partes da sua aplicação.
+4. O objeto *AuthenticationManager* instanciado com *@Autowired* é usado pra autenticar esse token. Internamente, o Spring Security usa o *UserDetailsService* que faz a verificação e retorna um objeto *UserDetails* que contém informações sobre o usuário.
+5. O controller chama o *TokenService* para criar um token de acesso e o retorna para o cliente armazenar e usá-lo nas solicitações futuras.
+6. O *SecurityConfigurations* define as regras de segurança para a aplicação com um método *@Bean* retornando um objeto *SecurityFilterChain*.
 
 SecurityFilter:
-1. Quando uma solicitação HTTP é recebida pelo servidor, ela passa por uma série de filtros, incluindo o SecurityFilter, antes de chegar ao controlador apropriado.
-2. O SecurityFilter é configurado para ser executado uma vez por solicitação HTTP com a anotação *@OncePerRequestFilter*.
-3. O Spring Security garante que o SecurityFilter seja executado antes do filtro padrão de autenticação, devido à configuração feita no método securityFilterChain da classe SecurityConfigurations, no método addFilterBefore.
+1. Quando uma solicitação HTTP é recebida pelo servidor, ela passa por uma série de filtros, incluindo o *SecurityFilter*, antes de chegar ao controlador apropriado.
+2. O *SecurityFilter* é configurado para ser executado uma vez por solicitação HTTP com a anotação *@OncePerRequestFilter*.
+3. O Spring Security garante que o *SecurityFilter* seja executado antes do filtro padrão de autenticação, devido à configuração feita no método *securityFilterChain* da classe *SecurityConfigurations*, no método *.addFilterBefore*.
 4. Ao ser executado, ele verifica o cabeçalho Authorization da solicitação para encontrar o token de autenticação.
-5. Com o token extraído, o SecurityFilter usa o TokenService para verificar e autenticar o usuário com base nas informações do token.
-6. Se o token for válido e corresponder a um usuário autenticado, o SecurityFilter configura a autenticação no contexto de segurança do Spring Security usando SecurityContextHolder.getContext().setAuthentication(authentication).
+5. Com o token extraído, o *SecurityFilter* usa o *TokenService* para verificar e autenticar o usuário com base nas informações do token.
+6. Se o token for válido e corresponder a um usuário autenticado, o *SecurityFilter* configura a autenticação no contexto de segurança do Spring Security usando *SecurityContextHolder.getContext().setAuthentication(authentication)*.
 7. Após a autenticação bem-sucedida, a solicitação continua a ser processada, e o controlador de login lida com a solicitação.
 
 #
