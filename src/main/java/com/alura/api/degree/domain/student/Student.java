@@ -1,8 +1,8 @@
-package com.alura.api.degree.domain.teacher;
+package com.alura.api.degree.domain.student;
 
 import com.alura.api.degree.domain.address.Address;
 import com.alura.api.degree.dto.Gender;
-import com.alura.api.degree.dto.teacher.TeacherRegisterData;
+import com.alura.api.degree.dto.student.StudentRegisterData;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -21,10 +21,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table(name = "teachers")
-@Entity(name = "Teacher")
-public class Teacher {
-    
+@Table(name = "students")
+@Entity(name = "Student")
+public class Student {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,20 +34,18 @@ public class Teacher {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    private String department;
-    private Float salary;
+    private String grade;
     private String phone;
 
     @Embedded
     private Address address;
 
-    public Teacher(TeacherRegisterData data) {
+    public Student(StudentRegisterData data) {
         this.active = true;
         this.name = data.name();
         this.email = data.email();
         this.gender = Gender.fromValue(data.gender());
-        this.department = data.department();
-        this.salary = data.salary();
+        this.grade = data.grade();
         this.phone = data.phone();
         this.address = new Address(data.address());
     }

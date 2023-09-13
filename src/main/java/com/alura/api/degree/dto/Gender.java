@@ -1,4 +1,4 @@
-package com.alura.api.degree.dto.teacher;
+package com.alura.api.degree.dto;
 
 public enum Gender {
     
