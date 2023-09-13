@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alura.api.degree.domain.meeting.MeetingRepository;
-import com.alura.api.degree.dto.meeting.ScheduleMeetingData;
+import com.alura.api.degree.model.meeting.MeetingRepository;
+import com.alura.api.degree.model.meeting.ScheduleMeetingData;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

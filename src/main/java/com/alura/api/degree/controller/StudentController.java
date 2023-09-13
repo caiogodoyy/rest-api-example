@@ -1,5 +1,7 @@
 package com.alura.api.degree.controller;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.alura.api.degree.domain.student.Student;
-import com.alura.api.degree.domain.student.StudentRepository;
-import com.alura.api.degree.dto.student.StudentRegisterData;
-import com.alura.api.degree.dto.student.StudentRegisterReturnBody;
+import com.alura.api.degree.model.student.Student;
+import com.alura.api.degree.model.student.StudentRegisterData;
+import com.alura.api.degree.model.student.StudentRegisterReturnBody;
+import com.alura.api.degree.service.StudentService;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -26,7 +28,7 @@ import jakarta.validation.Valid;
 public class StudentController {
 
     @Autowired
-    StudentRepository studentRepository;
+    StudentService service;
 
     @PostMapping
     @Transactional
@@ -34,30 +36,29 @@ public class StudentController {
             UriComponentsBuilder uriBuilder) {
         var student = new Student(data);
 
-        studentRepository.save(student);
+        service.save(student);
 
-        var uri = uriBuilder.path("/student/{id}").buildAndExpand(student.getId()).toUri();
+        var uri = URI.create("/student/" + student.getId());
         return ResponseEntity.created(uri).body(new StudentRegisterReturnBody(student));
     }
 
     @GetMapping
     public ResponseEntity<Page<StudentRegisterReturnBody>> listAllStudents(Pageable pageable) {
-        var page = studentRepository.findAllByActiveTrue(pageable).map(StudentRegisterReturnBody::new);
+        var page = service.getAllActiveStudents(pageable);
 
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<StudentRegisterReturnBody> getStudent(@PathVariable Long id) {
-        var student = studentRepository.getReferenceById(id);
+        var student = service.getStudentById(id);
         return ResponseEntity.ok(new StudentRegisterReturnBody(student));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> deactivateStudent(@PathVariable Long id) {
-        var student = studentRepository.getReferenceById(id);
-        student.deactivate();
+    public ResponseEntity<?> inactivateStudent(@PathVariable Long id) {
+        service.inactivateStudentById(id);
 
         return ResponseEntity.noContent().build();
     }

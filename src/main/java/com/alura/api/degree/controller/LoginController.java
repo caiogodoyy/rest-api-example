@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alura.api.degree.domain.user.User;
-import com.alura.api.degree.dto.user.UserLoginData;
-import com.alura.api.degree.dto.user.UserToken;
-import com.alura.api.degree.infra.security.TokenService;
+import com.alura.api.degree.model.user.User;
+import com.alura.api.degree.model.user.UserLoginData;
+import com.alura.api.degree.model.user.UserToken;
+import com.alura.api.degree.service.TokenService;
 
 import jakarta.validation.Valid;
 

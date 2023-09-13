@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.alura.api.degree.domain.teacher.Teacher;
-import com.alura.api.degree.domain.teacher.TeacherRepository;
-import com.alura.api.degree.dto.teacher.TeacherRegisterData;
-import com.alura.api.degree.dto.teacher.TeacherRegisterReturnBody;
+import com.alura.api.degree.model.teacher.Teacher;
+import com.alura.api.degree.model.teacher.TeacherRegisterData;
+import com.alura.api.degree.model.teacher.TeacherRegisterReturnBody;
+import com.alura.api.degree.repository.TeacherRepository;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

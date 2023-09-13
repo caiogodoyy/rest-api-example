@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.alura.api.degree.domain.user.User;
-import com.alura.api.degree.domain.user.UserRepository;
-import com.alura.api.degree.dto.user.UserRegisterData;
+import com.alura.api.degree.model.user.User;
+import com.alura.api.degree.model.user.UserRegisterData;
+import com.alura.api.degree.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

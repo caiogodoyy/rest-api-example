@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alura.api.degree.domain.user.UserRepository;
+import com.alura.api.degree.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 
