@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alura.api.degree.repository.UserRepository;
+import com.alura.api.degree.service.UserService;
 
 import jakarta.transaction.Transactional;
 
@@ -16,13 +16,12 @@ import jakarta.transaction.Transactional;
 public class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    UserService service;
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deactivateUser(@PathVariable Long id) {
-        var user = userRepository.getReferenceById(id);
-        user.deactivate();
+        service.inactivateUserById(id);
 
         return ResponseEntity.noContent().build();
     }

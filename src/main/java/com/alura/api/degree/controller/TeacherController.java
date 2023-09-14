@@ -1,5 +1,7 @@
 package com.alura.api.degree.controller;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,12 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.alura.api.degree.model.teacher.Teacher;
 import com.alura.api.degree.model.teacher.TeacherRegisterData;
 import com.alura.api.degree.model.teacher.TeacherRegisterReturnBody;
-import com.alura.api.degree.repository.TeacherRepository;
+import com.alura.api.degree.service.TeacherService;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -26,37 +27,36 @@ import jakarta.validation.Valid;
 public class TeacherController {
 
     @Autowired
-    TeacherRepository teacherRepository;
-    
+    TeacherService service;
+
     @PostMapping
     @Transactional
-    public ResponseEntity<TeacherRegisterReturnBody> registerTeacher(@RequestBody @Valid TeacherRegisterData data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<TeacherRegisterReturnBody> registerTeacher(@RequestBody @Valid TeacherRegisterData data) {
         var teacher = new Teacher(data);
-        
-        teacherRepository.save(teacher);
 
-        var uri = uriBuilder.path("/teacher/{id}").buildAndExpand(teacher.getId()).toUri();
+        service.save(teacher);
+
+        var uri = URI.create("/teacher/" + teacher.getId());
         return ResponseEntity.created(uri).body(new TeacherRegisterReturnBody(teacher));
     }
 
     @GetMapping
     public ResponseEntity<Page<TeacherRegisterReturnBody>> listAllTeachers(Pageable pageable) {
-        var page = teacherRepository.findAllByActiveTrue(pageable).map(TeacherRegisterReturnBody::new);
+        var page = service.getAllActiveTeachers(pageable);
 
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TeacherRegisterReturnBody> getTeacher(@PathVariable Long id) {
-        var teacher = teacherRepository.getReferenceById(id);
+        var teacher = service.getTeacherById(id);
         return ResponseEntity.ok(new TeacherRegisterReturnBody(teacher));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deactivateTeacher(@PathVariable Long id) {
-        var teacher = teacherRepository.getReferenceById(id);
-        teacher.deactivate();
+        service.inactivateTeacherById(id);
 
         return ResponseEntity.noContent().build();
     }
