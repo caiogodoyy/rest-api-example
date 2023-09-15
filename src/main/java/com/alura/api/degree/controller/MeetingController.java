@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alura.api.degree.model.meeting.Meeting;
 import com.alura.api.degree.model.meeting.ScheduleMeetingData;
 import com.alura.api.degree.service.MeetingService;
 
@@ -21,15 +20,15 @@ import jakarta.validation.Valid;
 public class MeetingController {
 
     @Autowired
-    MeetingService service;
+    MeetingService meetingService;
     
     @PostMapping
     @Transactional
     public ResponseEntity<ScheduleMeetingData> scheduleMeeting(@RequestBody @Valid ScheduleMeetingData data) {
-        var meeting = new Meeting(data);
+        var meeting = meetingService.schedule(data);
 
         var uri = URI.create("/meeting/" + meeting.getId());
-        return ResponseEntity.created(uri).body(new ScheduleMeetingData(meeting));
+        return ResponseEntity.created(uri).body(data);
     }
     
 }

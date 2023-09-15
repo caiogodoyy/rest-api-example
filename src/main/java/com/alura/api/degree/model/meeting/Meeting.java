@@ -2,12 +2,8 @@ package com.alura.api.degree.model.meeting;
 
 import java.time.LocalDateTime;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.alura.api.degree.model.student.Student;
 import com.alura.api.degree.model.teacher.Teacher;
-import com.alura.api.degree.service.StudentService;
-import com.alura.api.degree.service.TeacherService;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,12 +26,6 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Meeting")
 public class Meeting {
 
-    @Autowired
-    TeacherService teacherService;
-
-    @Autowired
-    StudentService studentService;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -49,11 +39,5 @@ public class Meeting {
     private Student student;
 
     private LocalDateTime dateTime;
-
-    public Meeting(ScheduleMeetingData data) {
-        this.teacher = teacherService.getTeacherById((data.teacherId()));
-        this.student = studentService.getStudentById(data.studentId());
-        this.dateTime = data.dateTime();
-    }
 
 }

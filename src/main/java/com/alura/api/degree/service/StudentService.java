@@ -32,4 +32,8 @@ public class StudentService {
         student.deactivate();
     }
 
+    public boolean exists(Long id) {
+        return repository.existsById(id);
+    }
+
 }
