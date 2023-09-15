@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.alura.api.degree.model.student.Student;
 import com.alura.api.degree.model.student.StudentRegisterData;
@@ -32,8 +31,7 @@ public class StudentController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<StudentRegisterReturnBody> registerStudent(@RequestBody @Valid StudentRegisterData data,
-            UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<StudentRegisterReturnBody> registerStudent(@RequestBody @Valid StudentRegisterData data) {
         var student = new Student(data);
 
         service.save(student);
