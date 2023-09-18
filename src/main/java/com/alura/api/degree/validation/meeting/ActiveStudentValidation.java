@@ -4,20 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alura.api.degree.model.meeting.ScheduleMeetingData;
-import com.alura.api.degree.service.TeacherService;
+import com.alura.api.degree.service.StudentService;
 
 import jakarta.validation.ValidationException;
 
 @Component
-public class ActiveTeacherValidation implements MeetingValidation {
+public class ActiveStudentValidation implements MeetingValidation {
 
     @Autowired
-    TeacherService teacherService;
-
+    StudentService studentService;
+    
     @Override
     public void validate(ScheduleMeetingData data) {
-        if (data.teacherId() != null && !teacherService.isActive(data.teacherId())) {
-            throw new ValidationException("Teacher is not active");
+        if (!studentService.isActive(data.studentId())) {
+            throw new ValidationException("Student is not active");
         }
     }
     

@@ -13,27 +13,31 @@ import com.alura.api.degree.repository.StudentRepository;
 public class StudentService {
     
     @Autowired
-    StudentRepository repository;
+    StudentRepository studentRepository;
 
     public void save(Student student) {
-        repository.save(student);
+        studentRepository.save(student);
     }
 
     public Page<StudentRegisterReturnBody> getAllActiveStudents(Pageable pageable) {
-        return repository.findAllByActiveTrue(pageable).map(StudentRegisterReturnBody::new);
+        return studentRepository.findAllByActiveTrue(pageable).map(StudentRegisterReturnBody::new);
     }
 
     public Student getStudentById(Long id) {
-        return repository.getReferenceById(id);
+        return studentRepository.getReferenceById(id);
     }
 
     public void inactivateStudentById(Long id) {
-        var student = repository.getReferenceById(id);
+        var student = studentRepository.getReferenceById(id);
         student.deactivate();
     }
 
     public boolean exists(Long id) {
-        return repository.existsById(id);
+        return studentRepository.existsById(id);
+    }
+
+    public Boolean isActive(Long id) {
+        return studentRepository.getReferenceById(id).getActive();
     }
 
 }

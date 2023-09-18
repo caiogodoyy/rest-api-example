@@ -12,6 +12,7 @@ import jakarta.validation.ValidationException;
 @Component
 public class SchedulingTimeValidation implements MeetingValidation {
 
+    @Override
     public void validate(ScheduleMeetingData data) {
         var meetingDate = data.dateTime();
         var currentDate = LocalDateTime.now();

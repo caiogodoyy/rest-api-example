@@ -1,0 +1,27 @@
+package com.alura.api.degree.validation.meeting;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.alura.api.degree.model.meeting.ScheduleMeetingData;
+import com.alura.api.degree.repository.MeetingRepository;
+
+import jakarta.validation.ValidationException;
+
+@Component
+public class TeacherAvailabilityValidation implements MeetingValidation {
+
+    @Autowired
+    MeetingRepository meetingRepository;
+
+    @Override
+    public void validate(ScheduleMeetingData data) {
+        if (data.teacherId() != null) {
+            var teacherHasMeetingInTheSameTime = meetingRepository.existsByTeacherIdAndDateTime(data.teacherId(), data.dateTime());
+            if (teacherHasMeetingInTheSameTime) {
+                throw new ValidationException("Teacher already has a meeting at that time");
+            }
+        }
+    }
+
+}

@@ -11,6 +11,7 @@ import jakarta.validation.ValidationException;
 @Component
 public class OpeningTimeValidation implements MeetingValidation {
     
+    @Override
     public void validate(ScheduleMeetingData data) {
         var meetingDate = data.dateTime();
 

@@ -29,5 +29,5 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
             limit 1
             """)
     public Teacher getRandomTeacherAvailable(LocalDateTime dateTime, String department);
-    
+
 }

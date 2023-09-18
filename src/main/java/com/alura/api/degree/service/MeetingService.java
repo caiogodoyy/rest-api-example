@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alura.api.degree.model.meeting.Meeting;
-import com.alura.api.degree.model.meeting.MeetingRepository;
 import com.alura.api.degree.model.meeting.ScheduleMeetingData;
 import com.alura.api.degree.model.teacher.Teacher;
+import com.alura.api.degree.repository.MeetingRepository;
 import com.alura.api.degree.validation.meeting.MeetingValidation;
 
 import jakarta.validation.ValidationException;
