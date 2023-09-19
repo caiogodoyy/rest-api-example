@@ -38,8 +38,13 @@ public class MeetingService {
 
         meetingValidations.forEach(v -> v.validate(data));
 
-        var teacher = getTeacher(data);
         var student = studentService.getStudentById(data.studentId());
+        var teacher = getTeacher(data);
+
+        if (teacher == null) {
+            throw new ValidationException("There is no teacher available");
+        }
+
         var meeting = new Meeting(null, teacher, student, data.dateTime());
 
         meetingRepository.save(meeting);
@@ -55,6 +60,11 @@ public class MeetingService {
             throw new ValidationException("Department should not be empty when teacher is not given");
         }
         return teacherService.getRandomTeacherAvailable(data.dateTime(), data.department());
+    }
+
+    public void cancel(Long id) {
+        var meeting = meetingRepository.getReferenceById(id);
+        meetingRepository.delete(meeting);
     }
 
 }

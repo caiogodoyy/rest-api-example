@@ -4,6 +4,8 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,14 @@ public class MeetingController {
 
         var uri = URI.create("/meeting/" + meeting.getId());
         return ResponseEntity.created(uri).body(new ScheduleMeetingReturnData(meeting));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> cancelMeeting(@PathVariable Long id) {
+        meetingService.cancel(id);
+
+        return ResponseEntity.noContent().build();
     }
     
 }

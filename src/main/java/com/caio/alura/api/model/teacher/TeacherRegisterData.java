@@ -12,7 +12,7 @@ public record TeacherRegisterData(
         @NotBlank @Email String email,
         @NotNull String gender,
         @NotBlank String department,
-        @NotNull Float salary,
+        @NotNull Double salary,
         @NotBlank String phone,
         @NotNull @Valid AddressRegisterData address) {
 

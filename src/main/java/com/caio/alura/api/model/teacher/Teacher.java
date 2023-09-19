@@ -34,7 +34,7 @@ public class Teacher {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String department;
-    private Float salary;
+    private Double salary;
     private String phone;
 
     @Embedded
