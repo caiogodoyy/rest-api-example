@@ -19,11 +19,13 @@ import com.caio.alura.api.model.teacher.TeacherRegisterData;
 import com.caio.alura.api.model.teacher.TeacherRegisterReturnBody;
 import com.caio.alura.api.service.TeacherService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/teacher")
+@SecurityRequirement(name = "bearer-key")
 public class TeacherController {
 
     @Autowired

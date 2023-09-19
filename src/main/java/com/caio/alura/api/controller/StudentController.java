@@ -19,11 +19,13 @@ import com.caio.alura.api.model.student.StudentRegisterData;
 import com.caio.alura.api.model.student.StudentRegisterReturnBody;
 import com.caio.alura.api.service.StudentService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/student")
+@SecurityRequirement(name = "bearer-key")
 public class StudentController {
 
     @Autowired

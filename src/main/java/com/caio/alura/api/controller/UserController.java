@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.caio.alura.api.service.UserService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/user")
+@SecurityRequirement(name = "bearer-key")
 public class UserController {
 
     @Autowired

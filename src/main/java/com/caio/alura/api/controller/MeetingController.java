@@ -13,11 +13,13 @@ import com.caio.alura.api.model.meeting.ScheduleMeetingData;
 import com.caio.alura.api.model.meeting.ScheduleMeetingReturnData;
 import com.caio.alura.api.service.MeetingService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/meeting")
+@SecurityRequirement(name = "bearer-key")
 public class MeetingController {
 
     @Autowired
