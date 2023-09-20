@@ -21,14 +21,14 @@ import jakarta.validation.Valid;
 public class RegisterController {
 
     @Autowired
-    UserService service;
+    private UserService userService;
 
     @PostMapping
     @Transactional
     public ResponseEntity<UserRegisterData> registerUser(@RequestBody @Valid UserRegisterData data) {
         var user = new User(data);
 
-        service.save(user);
+        this.userService.save(user);
 
         var uri = URI.create("/user/" + user.getId());
         return ResponseEntity.created(uri).body(new UserRegisterData(user));

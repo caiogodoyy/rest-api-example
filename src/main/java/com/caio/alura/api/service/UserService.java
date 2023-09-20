@@ -10,14 +10,14 @@ import com.caio.alura.api.repository.UserRepository;
 public class UserService {
     
     @Autowired
-    UserRepository repository;
+    private UserRepository userRepository;
 
     public void save(User user) {
-        repository.save(user);
+        this.userRepository.save(user);
     }
 
     public void inactivateUserById(Long id) {
-        var user = repository.getReferenceById(id);
+        var user = this.userRepository.getReferenceById(id);
         user.deactivate();
     }
     

@@ -9,6 +9,11 @@ import jakarta.validation.ValidationException;
 @RestControllerAdvice
 public class ExceptionController {
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException exception) {
+        return ResponseEntity.badRequest().body("Invalid input detected");
+    }
+
     @ExceptionHandler(ValidationException.class) 
     public ResponseEntity<?> handleValidationException(ValidationException exception) {
         return ResponseEntity.badRequest().body(exception.getMessage());

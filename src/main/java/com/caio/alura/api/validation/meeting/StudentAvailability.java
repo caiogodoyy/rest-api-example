@@ -12,14 +12,14 @@ import jakarta.validation.ValidationException;
 public class StudentAvailability implements MeetingValidation {
 
     @Autowired
-    MeetingRepository meetingRepository;
+    private MeetingRepository meetingRepository;
 
     @Override
     public void validate(ScheduleMeetingData data) {
         var begin = data.dateTime().withHour(7);
         var end = data.dateTime().withHour(18);
 
-        var studentHasMeetingInTheSameDay = meetingRepository.existsByStudentIdAndDateTimeBetween(data.studentId(), begin, end);
+        var studentHasMeetingInTheSameDay = this.meetingRepository.existsByStudentIdAndDateTimeBetween(data.studentId(), begin, end);
 
         if (studentHasMeetingInTheSameDay) {
             throw new ValidationException("Student already has a meeting at that day");

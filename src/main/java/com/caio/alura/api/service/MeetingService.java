@@ -18,28 +18,28 @@ import jakarta.validation.ValidationException;
 public class MeetingService {
 
     @Autowired
-    MeetingRepository meetingRepository;
+    private MeetingRepository meetingRepository;
 
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
 
     @Autowired
-    TeacherService teacherService;
+    private TeacherService teacherService;
 
     @Autowired
-    List<MeetingValidation> meetingValidations;
+    private List<MeetingValidation> meetingValidations;
 
     public Meeting schedule(ScheduleMeetingData data) {
-        if (data.teacherId() != null && !teacherService.exists(data.teacherId())) {
+        if (data.teacherId() != null && !this.teacherService.exists(data.teacherId())) {
             throw new ValidationException("Teacher do not exists");
         }
-        if (!studentService.exists(data.studentId())) {
+        if (!this.studentService.exists(data.studentId())) {
             throw new ValidationException("Student do not exists");
         }
 
-        meetingValidations.forEach(v -> v.validate(data));
+        this.meetingValidations.forEach(v -> v.validate(data));
 
-        var student = studentService.getStudentById(data.studentId());
+        var student = this.studentService.getStudentById(data.studentId());
         var teacher = getTeacher(data);
 
         if (teacher == null) {
@@ -48,24 +48,24 @@ public class MeetingService {
 
         var meeting = new Meeting(null, teacher, student, data.dateTime());
 
-        meetingRepository.save(meeting);
+        this.meetingRepository.save(meeting);
 
         return meeting;
     }
 
     public Teacher getTeacher(ScheduleMeetingData data) {
         if (data.teacherId() != null) {
-            return teacherService.getTeacherById(data.teacherId());
+            return this.teacherService.getTeacherById(data.teacherId());
         }
         if (data.department() == null) {
             throw new ValidationException("Department should not be empty when teacher is not given");
         }
-        return teacherService.getRandomTeacherAvailable(data.dateTime(), Department.fromValue(data.department()));
+        return this.teacherService.getRandomTeacherAvailable(data.dateTime(), Department.fromValue(data.department()));
     }
 
     public void cancel(Long id) {
-        var meeting = meetingRepository.getReferenceById(id);
-        meetingRepository.delete(meeting);
+        var meeting = this.meetingRepository.getReferenceById(id);
+        this.meetingRepository.delete(meeting);
     }
 
 }

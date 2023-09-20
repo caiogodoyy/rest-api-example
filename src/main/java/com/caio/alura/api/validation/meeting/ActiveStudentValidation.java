@@ -12,11 +12,11 @@ import jakarta.validation.ValidationException;
 public class ActiveStudentValidation implements MeetingValidation {
 
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
     
     @Override
     public void validate(ScheduleMeetingData data) {
-        if (!studentService.isActive(data.studentId())) {
+        if (!this.studentService.isActive(data.studentId())) {
             throw new ValidationException("Student is not active");
         }
     }

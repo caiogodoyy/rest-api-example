@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfigurations {
 
     @Autowired
-    SecurityFilter securityFilter;
+    private SecurityFilter securityFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -29,7 +29,7 @@ public class SecurityConfigurations {
                         a -> a.requestMatchers("/register", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**")
                                 .permitAll()
                                 .requestMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated())
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(this.securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

@@ -21,17 +21,17 @@ import jakarta.validation.Valid;
 public class LoginController {
     
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
 
     @PostMapping
     public ResponseEntity<UserToken> login(@RequestBody @Valid UserLoginData data) {
         var authenticationToken = new UsernamePasswordAuthenticationToken(data.username(), data.password());
-        var userAuthentication = authenticationManager.authenticate(authenticationToken);
+        var userAuthentication = this.authenticationManager.authenticate(authenticationToken);
 
-        var token = tokenService.createToken((User) userAuthentication.getPrincipal());
+        var token = this.tokenService.createToken((User) userAuthentication.getPrincipal());
 
         return ResponseEntity.ok(new UserToken(token));
     }

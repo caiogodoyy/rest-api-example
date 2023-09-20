@@ -13,31 +13,31 @@ import com.caio.alura.api.repository.StudentRepository;
 public class StudentService {
     
     @Autowired
-    StudentRepository studentRepository;
+    private StudentRepository studentRepository;
 
     public void save(Student student) {
-        studentRepository.save(student);
+        this.studentRepository.save(student);
     }
 
     public Page<StudentRegisterReturnBody> getAllActiveStudents(Pageable pageable) {
-        return studentRepository.findAllByActiveTrue(pageable).map(StudentRegisterReturnBody::new);
+        return this.studentRepository.findAllByActiveTrue(pageable).map(StudentRegisterReturnBody::new);
     }
 
     public Student getStudentById(Long id) {
-        return studentRepository.getReferenceById(id);
+        return this.studentRepository.getReferenceById(id);
     }
 
     public void inactivateStudentById(Long id) {
-        var student = studentRepository.getReferenceById(id);
+        var student = this.studentRepository.getReferenceById(id);
         student.deactivate();
     }
 
     public boolean exists(Long id) {
-        return studentRepository.existsById(id);
+        return this.studentRepository.existsById(id);
     }
 
     public Boolean isActive(Long id) {
-        return studentRepository.getReferenceById(id).getActive();
+        return this.studentRepository.getReferenceById(id).getActive();
     }
 
 }

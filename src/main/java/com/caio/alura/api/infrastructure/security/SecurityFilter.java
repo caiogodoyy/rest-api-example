@@ -20,18 +20,18 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
     
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
                 var token = getTokenFromRequest(request);
                 if (token != null) {
-                    var subject = tokenService.getSubject(token);
-                    var user = userRepository.findByUsernameAndActiveTrue(subject);
+                    var subject = this.tokenService.getSubject(token);
+                    var user = this.userRepository.findByUsernameAndActiveTrue(subject);
                     var userAuthentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(userAuthentication);
                 }

@@ -29,14 +29,14 @@ import jakarta.validation.Valid;
 public class StudentController {
 
     @Autowired
-    StudentService service;
+    private StudentService studentService;
 
     @PostMapping
     @Transactional
     public ResponseEntity<StudentRegisterReturnBody> registerStudent(@RequestBody @Valid StudentRegisterData data) {
         var student = new Student(data);
 
-        service.save(student);
+        this.studentService.save(student);
 
         var uri = URI.create("/student/" + student.getId());
         return ResponseEntity.created(uri).body(new StudentRegisterReturnBody(student));
@@ -44,21 +44,21 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<Page<StudentRegisterReturnBody>> listAllStudents(Pageable pageable) {
-        var page = service.getAllActiveStudents(pageable);
+        var page = this.studentService.getAllActiveStudents(pageable);
 
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<StudentRegisterReturnBody> getStudent(@PathVariable Long id) {
-        var student = service.getStudentById(id);
+        var student = this.studentService.getStudentById(id);
         return ResponseEntity.ok(new StudentRegisterReturnBody(student));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> inactivateStudent(@PathVariable Long id) {
-        service.inactivateStudentById(id);
+        this.studentService.inactivateStudentById(id);
 
         return ResponseEntity.noContent().build();
     }

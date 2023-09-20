@@ -16,35 +16,35 @@ import com.caio.alura.api.repository.TeacherRepository;
 public class TeacherService {
 
     @Autowired
-    TeacherRepository teacherRepository;
+    private TeacherRepository teacherRepository;
 
     public void save(Teacher teacher) {
-        teacherRepository.save(teacher);
+        this.teacherRepository.save(teacher);
     }
 
     public Page<TeacherRegisterReturnBody> getAllActiveTeachers(Pageable pageable) {
-        return teacherRepository.findAllByActiveTrue(pageable).map(TeacherRegisterReturnBody::new);
+        return this.teacherRepository.findAllByActiveTrue(pageable).map(TeacherRegisterReturnBody::new);
     }
 
     public Teacher getTeacherById(Long id) {
-        return teacherRepository.getReferenceById(id);
+        return this.teacherRepository.getReferenceById(id);
     }
 
     public void inactivateTeacherById(Long id) {
-        var teacher = teacherRepository.getReferenceById(id);
+        var teacher = this.teacherRepository.getReferenceById(id);
         teacher.deactivate();
     }
 
     public boolean exists(Long id) {
-        return teacherRepository.existsById(id);
+        return this.teacherRepository.existsById(id);
     }
 
     public Teacher getRandomTeacherAvailable(LocalDateTime dateTime, Department department) {
-        return teacherRepository.getRandomTeacherAvailable(dateTime, department);
+        return this.teacherRepository.getRandomTeacherAvailable(dateTime, department);
     }
 
     public Boolean isActive(Long id) {
-        return teacherRepository.getReferenceById(id).getActive();
+        return this.teacherRepository.getReferenceById(id).getActive();
     }
 
 }

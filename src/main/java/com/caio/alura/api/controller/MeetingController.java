@@ -25,12 +25,12 @@ import jakarta.validation.Valid;
 public class MeetingController {
 
     @Autowired
-    MeetingService meetingService;
+    private MeetingService meetingService;
     
     @PostMapping
     @Transactional
     public ResponseEntity<ScheduleMeetingReturnData> scheduleMeeting(@RequestBody @Valid ScheduleMeetingData data) {
-        var meeting = meetingService.schedule(data);
+        var meeting = this.meetingService.schedule(data);
 
         var uri = URI.create("/meeting/" + meeting.getId());
         return ResponseEntity.created(uri).body(new ScheduleMeetingReturnData(meeting));
@@ -39,7 +39,7 @@ public class MeetingController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> cancelMeeting(@PathVariable Long id) {
-        meetingService.cancel(id);
+        this.meetingService.cancel(id);
 
         return ResponseEntity.noContent().build();
     }

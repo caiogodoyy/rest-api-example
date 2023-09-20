@@ -29,14 +29,14 @@ import jakarta.validation.Valid;
 public class TeacherController {
 
     @Autowired
-    TeacherService service;
+    private TeacherService teacherService;
 
     @PostMapping
     @Transactional
     public ResponseEntity<TeacherRegisterReturnBody> registerTeacher(@RequestBody @Valid TeacherRegisterData data) {
         var teacher = new Teacher(data);
 
-        service.save(teacher);
+        this.teacherService.save(teacher);
 
         var uri = URI.create("/teacher/" + teacher.getId());
         return ResponseEntity.created(uri).body(new TeacherRegisterReturnBody(teacher));
@@ -44,21 +44,21 @@ public class TeacherController {
 
     @GetMapping
     public ResponseEntity<Page<TeacherRegisterReturnBody>> listAllTeachers(Pageable pageable) {
-        var page = service.getAllActiveTeachers(pageable);
+        var page = this.teacherService.getAllActiveTeachers(pageable);
 
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TeacherRegisterReturnBody> getTeacher(@PathVariable Long id) {
-        var teacher = service.getTeacherById(id);
+        var teacher = this.teacherService.getTeacherById(id);
         return ResponseEntity.ok(new TeacherRegisterReturnBody(teacher));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deactivateTeacher(@PathVariable Long id) {
-        service.inactivateTeacherById(id);
+        this.teacherService.inactivateTeacherById(id);
 
         return ResponseEntity.noContent().build();
     }

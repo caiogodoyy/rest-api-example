@@ -42,7 +42,7 @@ public class TeacherRepositoryTest {
         var student = registerStudent("student", "student@email.com", "6 ano");
         scheduleMeeting(teacher, student, dateTime);
 
-        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, Department.GEOGRAFIA);
+        var teacherReturned = this.teacherRepository.getRandomTeacherAvailable(dateTime, Department.GEOGRAFIA);
         assertEquals(null, teacherReturned);
     }
 
@@ -53,7 +53,7 @@ public class TeacherRepositoryTest {
 
         var teacher = registerTeacher("teacher", "teacher@email.com", "geografia");
 
-        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, Department.GEOGRAFIA);
+        var teacherReturned = this.teacherRepository.getRandomTeacherAvailable(dateTime, Department.GEOGRAFIA);
         assertEquals(teacher, teacherReturned);
     }
 
@@ -64,7 +64,7 @@ public class TeacherRepositoryTest {
 
         registerTeacher("teacher", "teacher@email.com", "geografia");
 
-        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, Department.MATEMATICA);
+        var teacherReturned = this.teacherRepository.getRandomTeacherAvailable(dateTime, Department.MATEMATICA);
         assertEquals(null, teacherReturned);
     }
 
@@ -76,13 +76,13 @@ public class TeacherRepositoryTest {
         var teacher = registerTeacher("teacher", "teacher@email.com", "geografia");
         teacher.deactivate();
 
-        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, Department.GEOGRAFIA);
+        var teacherReturned = this.teacherRepository.getRandomTeacherAvailable(dateTime, Department.GEOGRAFIA);
         assertEquals(null, teacherReturned);
     }
 
     private Teacher registerTeacher(String name, String email, String department) {
         var teacher = new Teacher(teacherRegisterData(name, email, department));
-        entityManager.persist(teacher);
+        this.entityManager.persist(teacher);
         return teacher;
     }
 
@@ -95,7 +95,7 @@ public class TeacherRepositoryTest {
 
     private Student registerStudent(String name, String email, String grade) {
         var student = new Student(studentRegisterData(name, email, grade));
-        entityManager.persist(student);
+        this.entityManager.persist(student);
         return student;
     }
 
@@ -109,7 +109,7 @@ public class TeacherRepositoryTest {
     }
 
     private void scheduleMeeting(Teacher teacher, Student student, LocalDateTime dateTime) {
-        entityManager.persist(new Meeting(null, teacher, student, dateTime));
+        this.entityManager.persist(new Meeting(null, teacher, student, dateTime));
     }
 
 }

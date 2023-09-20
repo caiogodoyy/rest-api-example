@@ -18,12 +18,12 @@ import jakarta.transaction.Transactional;
 public class UserController {
 
     @Autowired
-    UserService service;
+    private UserService userService;
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deactivateUser(@PathVariable Long id) {
-        service.inactivateUserById(id);
+        this.userService.inactivateUserById(id);
 
         return ResponseEntity.noContent().build();
     }
