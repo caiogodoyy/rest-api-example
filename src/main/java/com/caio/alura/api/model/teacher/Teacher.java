@@ -1,5 +1,6 @@
 package com.caio.alura.api.model.teacher;
 
+import com.caio.alura.api.enums.Department;
 import com.caio.alura.api.enums.Gender;
 import com.caio.alura.api.model.address.Address;
 
@@ -33,7 +34,8 @@ public class Teacher {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    private String department;
+    @Enumerated(EnumType.STRING)
+    private Department department;
     private Double salary;
     private String phone;
 
@@ -45,7 +47,7 @@ public class Teacher {
         this.name = data.name();
         this.email = data.email();
         this.gender = Gender.fromValue(data.gender());
-        this.department = data.department();
+        this.department = Department.fromValue(data.department());
         this.salary = data.salary();
         this.phone = data.phone();
         this.address = new Address(data.address());
