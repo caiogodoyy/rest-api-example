@@ -45,6 +45,40 @@ public class TeacherRepositoryTest {
         assertEquals(null, teacherReturned);
     }
 
+    @Test
+    void returnRandomTeacherWhenTeacherIsAvailable() {
+        var dateTime = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).withHour(10).withNano(0);
+        System.out.println("Data atual" + dateTime);
+
+        var teacher = registerTeacher("teacher", "teacher@email.com", "geografia");
+
+        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, "geografia");
+        assertEquals(teacher, teacherReturned);
+    }
+
+    @Test
+    void returnNullWhenTeacherIsAvailableWithDifferentDeparment() {
+        var dateTime = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).withHour(10).withNano(0);
+        System.out.println("Data atual" + dateTime);
+
+        registerTeacher("teacher", "teacher@email.com", "geografia");
+
+        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, "matematica");
+        assertEquals(null, teacherReturned);
+    }
+
+    @Test
+    void returnNullWhenAllTeachersAreInactive() {
+        var dateTime = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).withHour(10).withNano(0);
+        System.out.println("Data atual" + dateTime);
+
+        var teacher = registerTeacher("teacher", "teacher@email.com", "geografia");
+        teacher.deactivate();
+
+        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, "geografia");
+        assertEquals(null, teacherReturned);
+    }
+
     private Teacher registerTeacher(String name, String email, String department) {
         var teacher = new Teacher(teacherRegisterData(name, email, department));
         entityManager.persist(teacher);
