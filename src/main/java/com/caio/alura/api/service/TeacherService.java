@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.caio.alura.api.enums.Department;
 import com.caio.alura.api.model.teacher.Teacher;
 import com.caio.alura.api.model.teacher.TeacherRegisterReturnBody;
 import com.caio.alura.api.repository.TeacherRepository;
@@ -38,7 +39,7 @@ public class TeacherService {
         return teacherRepository.existsById(id);
     }
 
-    public Teacher getRandomTeacherAvailable(LocalDateTime dateTime, String department) {
+    public Teacher getRandomTeacherAvailable(LocalDateTime dateTime, Department department) {
         return teacherRepository.getRandomTeacherAvailable(dateTime, department);
     }
 

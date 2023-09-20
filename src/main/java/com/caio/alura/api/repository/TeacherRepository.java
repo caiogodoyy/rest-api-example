@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.caio.alura.api.enums.Department;
 import com.caio.alura.api.model.teacher.Teacher;
 
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
@@ -28,6 +29,6 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
             order by rand()
             limit 1
             """)
-    public Teacher getRandomTeacherAvailable(LocalDateTime dateTime, String department);
+    public Teacher getRandomTeacherAvailable(LocalDateTime dateTime, Department department);
 
 }

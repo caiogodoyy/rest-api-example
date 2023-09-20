@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.caio.alura.api.enums.Department;
 import com.caio.alura.api.model.meeting.Meeting;
 import com.caio.alura.api.model.meeting.ScheduleMeetingData;
 import com.caio.alura.api.model.teacher.Teacher;
@@ -59,7 +60,7 @@ public class MeetingService {
         if (data.department() == null) {
             throw new ValidationException("Department should not be empty when teacher is not given");
         }
-        return teacherService.getRandomTeacherAvailable(data.dateTime(), data.department());
+        return teacherService.getRandomTeacherAvailable(data.dateTime(), Department.fromValue(data.department()));
     }
 
     public void cancel(Long id) {

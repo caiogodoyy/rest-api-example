@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.caio.alura.api.enums.Department;
 import com.caio.alura.api.enums.Gender;
 import com.caio.alura.api.model.address.AddressRegisterData;
 import com.caio.alura.api.model.meeting.Meeting;
@@ -41,7 +42,7 @@ public class TeacherRepositoryTest {
         var student = registerStudent("student", "student@email.com", "6 ano");
         scheduleMeeting(teacher, student, dateTime);
 
-        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, "geografia");
+        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, Department.GEOGRAFIA);
         assertEquals(null, teacherReturned);
     }
 
@@ -52,7 +53,7 @@ public class TeacherRepositoryTest {
 
         var teacher = registerTeacher("teacher", "teacher@email.com", "geografia");
 
-        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, "geografia");
+        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, Department.GEOGRAFIA);
         assertEquals(teacher, teacherReturned);
     }
 
@@ -63,7 +64,7 @@ public class TeacherRepositoryTest {
 
         registerTeacher("teacher", "teacher@email.com", "geografia");
 
-        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, "matematica");
+        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, Department.MATEMATICA);
         assertEquals(null, teacherReturned);
     }
 
@@ -75,7 +76,7 @@ public class TeacherRepositoryTest {
         var teacher = registerTeacher("teacher", "teacher@email.com", "geografia");
         teacher.deactivate();
 
-        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, "geografia");
+        var teacherReturned = teacherRepository.getRandomTeacherAvailable(dateTime, Department.GEOGRAFIA);
         assertEquals(null, teacherReturned);
     }
 
@@ -84,6 +85,8 @@ public class TeacherRepositoryTest {
         entityManager.persist(teacher);
         return teacher;
     }
+
+    //
 
     private TeacherRegisterData teacherRegisterData(String name, String email, String department) {
         return new TeacherRegisterData(name, email, Gender.MASCULINO.toString(), department, 1500.00, "(99)99999-9999",
