@@ -38,7 +38,7 @@ public class TeacherRepositoryTest {
         var dateTime = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).withHour(10).withNano(0);
         System.out.println("Data atual" + dateTime);
 
-        var teacher = registerTeacher("teacher", "teacher@email.com", "geografia");
+        var teacher = registerTeacher("teacher", "teacher@email.com", Department.GEOGRAFIA);
         var student = registerStudent("student", "student@email.com", "6 ano");
         scheduleMeeting(teacher, student, dateTime);
 
@@ -51,7 +51,7 @@ public class TeacherRepositoryTest {
         var dateTime = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).withHour(10).withNano(0);
         System.out.println("Data atual" + dateTime);
 
-        var teacher = registerTeacher("teacher", "teacher@email.com", "geografia");
+        var teacher = registerTeacher("teacher", "teacher@email.com", Department.GEOGRAFIA);
 
         var teacherReturned = this.teacherRepository.getRandomTeacherAvailable(dateTime, Department.GEOGRAFIA);
         assertEquals(teacher, teacherReturned);
@@ -62,7 +62,7 @@ public class TeacherRepositoryTest {
         var dateTime = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).withHour(10).withNano(0);
         System.out.println("Data atual" + dateTime);
 
-        registerTeacher("teacher", "teacher@email.com", "geografia");
+        registerTeacher("teacher", "teacher@email.com", Department.BIOLOGIA);
 
         var teacherReturned = this.teacherRepository.getRandomTeacherAvailable(dateTime, Department.MATEMATICA);
         assertEquals(null, teacherReturned);
@@ -73,14 +73,14 @@ public class TeacherRepositoryTest {
         var dateTime = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).withHour(10).withNano(0);
         System.out.println("Data atual" + dateTime);
 
-        var teacher = registerTeacher("teacher", "teacher@email.com", "geografia");
+        var teacher = registerTeacher("teacher", "teacher@email.com", Department.GEOGRAFIA);
         teacher.deactivate();
 
         var teacherReturned = this.teacherRepository.getRandomTeacherAvailable(dateTime, Department.GEOGRAFIA);
         assertEquals(null, teacherReturned);
     }
 
-    private Teacher registerTeacher(String name, String email, String department) {
+    private Teacher registerTeacher(String name, String email, Department department) {
         var teacher = new Teacher(teacherRegisterData(name, email, department));
         this.entityManager.persist(teacher);
         return teacher;
@@ -88,8 +88,8 @@ public class TeacherRepositoryTest {
 
     //
 
-    private TeacherRegisterData teacherRegisterData(String name, String email, String department) {
-        return new TeacherRegisterData(name, email, Gender.MASCULINO.toString(), department, 1500.00, "(99)99999-9999",
+    private TeacherRegisterData teacherRegisterData(String name, String email, Department department) {
+        return new TeacherRegisterData(name, email, Gender.MASCULINO, department, 1500.00, "(99)99999-9999",
                 addressRegisterData());
     }
 
@@ -100,7 +100,7 @@ public class TeacherRepositoryTest {
     }
 
     private StudentRegisterData studentRegisterData(String name, String email, String grade) {
-        return new StudentRegisterData(name, email, Gender.MASCULINO.toString(), grade, "(99)99999-9999",
+        return new StudentRegisterData(name, email, Gender.MASCULINO, grade, "(99)99999-9999",
                 addressRegisterData());
     }
 

@@ -1,18 +1,14 @@
 package com.caio.alura.api.model.student;
 
+import com.caio.alura.api.enums.Gender;
 import com.caio.alura.api.model.address.AddressRegisterData;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+public record StudentRegisterData(String name, String email, Gender gender, String grade, String phone,
+                AddressRegisterData address) {
 
-public record StudentRegisterData(
-        @NotBlank String name,
-        @NotBlank @Email String email,
-        @NotNull String gender,
-        @NotBlank String grade,
-        @NotBlank String phone,
-        @NotNull @Valid AddressRegisterData address) {
+        public StudentRegisterData(StudentUserInputData userInput) {
+                this(userInput.name(), userInput.email(), Gender.fromValue(userInput.gender()),
+                                userInput.grade(), userInput.phone(), userInput.address());
+        }
 
 }

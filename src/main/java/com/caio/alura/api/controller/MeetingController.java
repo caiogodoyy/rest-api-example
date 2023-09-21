@@ -1,7 +1,5 @@
 package com.caio.alura.api.controller;
 
-import java.net.URI;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.caio.alura.api.model.meeting.ScheduleMeetingData;
-import com.caio.alura.api.model.meeting.ScheduleMeetingReturnData;
+import com.caio.alura.api.model.meeting.MeetingUserInputData;
+import com.caio.alura.api.model.meeting.MeetingRegisterData;
+import com.caio.alura.api.model.meeting.MeetingRegisterReturnData;
 import com.caio.alura.api.service.MeetingService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -29,11 +28,12 @@ public class MeetingController {
     
     @PostMapping
     @Transactional
-    public ResponseEntity<ScheduleMeetingReturnData> scheduleMeeting(@RequestBody @Valid ScheduleMeetingData data) {
-        var meeting = this.meetingService.schedule(data);
+    public ResponseEntity<MeetingRegisterReturnData> scheduleMeeting(@RequestBody @Valid MeetingUserInputData userInput) {
+        var data = new MeetingRegisterData(userInput);
 
-        var uri = URI.create("/meeting/" + meeting.getId());
-        return ResponseEntity.created(uri).body(new ScheduleMeetingReturnData(meeting));
+        var returnData = this.meetingService.schedule(data);
+
+        return ResponseEntity.ok(returnData);
     }
 
     @DeleteMapping("/{id}")

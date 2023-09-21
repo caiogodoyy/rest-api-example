@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.caio.alura.api.model.student.Student;
 import com.caio.alura.api.model.student.StudentRegisterData;
 import com.caio.alura.api.model.student.StudentRegisterReturnBody;
+import com.caio.alura.api.model.student.StudentUserInputData;
 import com.caio.alura.api.service.StudentService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -33,7 +34,9 @@ public class StudentController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<StudentRegisterReturnBody> registerStudent(@RequestBody @Valid StudentRegisterData data) {
+    public ResponseEntity<StudentRegisterReturnBody> registerStudent(@RequestBody @Valid StudentUserInputData userInput) {
+        var data = new StudentRegisterData(userInput);
+
         var student = new Student(data);
 
         this.studentService.save(student);

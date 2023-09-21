@@ -3,7 +3,7 @@ package com.caio.alura.api.validation.meeting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.caio.alura.api.model.meeting.ScheduleMeetingData;
+import com.caio.alura.api.model.meeting.MeetingRegisterData;
 import com.caio.alura.api.repository.MeetingRepository;
 
 import jakarta.validation.ValidationException;
@@ -15,7 +15,7 @@ public class StudentAvailability implements MeetingValidation {
     private MeetingRepository meetingRepository;
 
     @Override
-    public void validate(ScheduleMeetingData data) {
+    public void validate(MeetingRegisterData data) {
         var begin = data.dateTime().withHour(7);
         var end = data.dateTime().withHour(18);
 

@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.caio.alura.api.enums.Department;
 import com.caio.alura.api.model.meeting.Meeting;
-import com.caio.alura.api.model.meeting.ScheduleMeetingData;
+import com.caio.alura.api.model.meeting.MeetingRegisterData;
+import com.caio.alura.api.model.meeting.MeetingRegisterReturnData;
 import com.caio.alura.api.model.teacher.Teacher;
 import com.caio.alura.api.repository.MeetingRepository;
 import com.caio.alura.api.validation.meeting.MeetingValidation;
@@ -29,7 +29,7 @@ public class MeetingService {
     @Autowired
     private List<MeetingValidation> meetingValidations;
 
-    public Meeting schedule(ScheduleMeetingData data) {
+    public MeetingRegisterReturnData schedule(MeetingRegisterData data) {
         if (data.teacherId() != null && !this.teacherService.exists(data.teacherId())) {
             throw new ValidationException("Teacher do not exists");
         }
@@ -50,17 +50,17 @@ public class MeetingService {
 
         this.meetingRepository.save(meeting);
 
-        return meeting;
+        return new MeetingRegisterReturnData(meeting);
     }
 
-    public Teacher getTeacher(ScheduleMeetingData data) {
+    public Teacher getTeacher(MeetingRegisterData data) {
         if (data.teacherId() != null) {
             return this.teacherService.getTeacherById(data.teacherId());
         }
         if (data.department() == null) {
             throw new ValidationException("Department should not be empty when teacher is not given");
         }
-        return this.teacherService.getRandomTeacherAvailable(data.dateTime(), Department.fromValue(data.department()));
+        return this.teacherService.getRandomTeacherAvailable(data.dateTime(), data.department());
     }
 
     public void cancel(Long id) {

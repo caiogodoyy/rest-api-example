@@ -4,7 +4,7 @@ import java.time.DayOfWeek;
 
 import org.springframework.stereotype.Component;
 
-import com.caio.alura.api.model.meeting.ScheduleMeetingData;
+import com.caio.alura.api.model.meeting.MeetingRegisterData;
 
 import jakarta.validation.ValidationException;
 
@@ -12,7 +12,7 @@ import jakarta.validation.ValidationException;
 public class OpeningTimeValidation implements MeetingValidation {
     
     @Override
-    public void validate(ScheduleMeetingData data) {
+    public void validate(MeetingRegisterData data) {
         var meetingDate = data.dateTime();
 
         var isWeekend = meetingDate.getDayOfWeek() == DayOfWeek.SATURDAY || meetingDate.getDayOfWeek() == DayOfWeek.SUNDAY;

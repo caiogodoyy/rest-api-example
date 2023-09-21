@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 
-public record ScheduleMeetingData(
+public record MeetingUserInputData(
                 Long teacherId,
                 @NotNull Long studentId,
                 @NotNull @Future LocalDateTime dateTime,

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
-import com.caio.alura.api.model.meeting.ScheduleMeetingData;
+import com.caio.alura.api.model.meeting.MeetingRegisterData;
 
 import jakarta.validation.ValidationException;
 
@@ -13,7 +13,7 @@ import jakarta.validation.ValidationException;
 public class SchedulingTimeValidation implements MeetingValidation {
 
     @Override
-    public void validate(ScheduleMeetingData data) {
+    public void validate(MeetingRegisterData data) {
         var meetingDate = data.dateTime();
         var currentDate = LocalDateTime.now();
 

@@ -46,8 +46,8 @@ public class Teacher {
         this.active = true;
         this.name = data.name();
         this.email = data.email();
-        this.gender = Gender.fromValue(data.gender());
-        this.department = Department.fromValue(data.department());
+        this.gender = data.gender();
+        this.department = data.department();
         this.salary = data.salary();
         this.phone = data.phone();
         this.address = new Address(data.address());

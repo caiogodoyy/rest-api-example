@@ -2,9 +2,9 @@ package com.caio.alura.api.model.meeting;
 
 import java.time.LocalDateTime;
 
-public record ScheduleMeetingReturnData(Long id, Long teacherId, Long studentId, LocalDateTime dateTime) {
+public record MeetingRegisterReturnData(Long id, Long teacherId, Long studentId, LocalDateTime dateTime) {
 
-    public ScheduleMeetingReturnData(Meeting meeting) {
+    public MeetingRegisterReturnData(Meeting meeting) {
         this(meeting.getId(), meeting.getTeacher().getId(), meeting.getStudent().getId(), meeting.getDateTime());
     }
     

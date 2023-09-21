@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.caio.alura.api.model.teacher.Teacher;
 import com.caio.alura.api.model.teacher.TeacherRegisterData;
 import com.caio.alura.api.model.teacher.TeacherRegisterReturnBody;
+import com.caio.alura.api.model.teacher.TeacherUserInputData;
 import com.caio.alura.api.service.TeacherService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -33,7 +34,9 @@ public class TeacherController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<TeacherRegisterReturnBody> registerTeacher(@RequestBody @Valid TeacherRegisterData data) {
+    public ResponseEntity<TeacherRegisterReturnBody> registerTeacher(@RequestBody @Valid TeacherUserInputData userInput) {
+        var data = new TeacherRegisterData(userInput);
+
         var teacher = new Teacher(data);
 
         this.teacherService.save(teacher);

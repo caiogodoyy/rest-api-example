@@ -43,7 +43,7 @@ public class Student {
         this.active = true;
         this.name = data.name();
         this.email = data.email();
-        this.gender = Gender.fromValue(data.gender());
+        this.gender = data.gender();
         this.grade = data.grade();
         this.phone = data.phone();
         this.address = new Address(data.address());
