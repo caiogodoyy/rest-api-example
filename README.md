@@ -21,16 +21,24 @@ mvn clean package -DskipTests
 ```
 
 ## Run local
+To run the application locally, execute the following command in the project directory:
+```
+java -jar -DJWT_SECRET=eyJhbGciOiJIUzI1NiJ9 -DDOMAIN=localhost:3306 target/api-0.0.1-SNAPSHOT.jar
+```
 
 ## Run docker
-To run the application using Docker, execute the following commands:
-1. First, start a MySQL container with the following command:
+To run the application using Docker, execute the following commands in the project directory:
+1. Create a Docker network:
 ```
-docker run --name container-name -p 3306:3306 -v local/path/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -d mysql
+docker network create api-template-network
 ```
-2. Next, build and run the API container:
+2. Start a MySQL container:
 ```
-docker build -t image-name .
-docker run --name container-name -p 8080:8080 image-name
+docker run --name api-template-mysql --network api-template-network -p 3306:3306 -v $(pwd)/init.sql:/data/app/init.sql -e MYSQL_ROOT_PASSWORD=root -d mysql --init-file /data/app/init.sql
+```
+3. Build and run the API container:
+```
+docker build -t api-template-image .
+docker run --name api-template --network api-template-network -p 8080:8080 -e JWT_SECRET=eyJhbGciOiJIUzI1NiJ9 -e DOMAIN=api-template-mysql:3306 api-template-image
 ```
 Now, you can access the API at http://localhost:8080.
