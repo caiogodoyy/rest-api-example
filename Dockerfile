@@ -1,9 +1,7 @@
-FROM maven:3.8.4-openjdk-17
+FROM openjdk:17.0.2
 
-WORKDIR /app
+VOLUME /tmp
 
-COPY . /app
+COPY target/api-0.0.1-SNAPSHOT.jar app.jar
 
-RUN mvn clean package -DskipTests
-
-ENTRYPOINT ["java","-jar","target/api-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","/app.jar"]
