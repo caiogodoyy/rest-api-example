@@ -20,11 +20,41 @@ cd rest-api-template-java
 mvn clean package -DskipTests
 ```
 
-## Run local
-To run the application locally, execute the following command in the project directory:
-```
+## Run Locally
+
+To run the application locally, ensure that the MySQL server is running either locally or in a container.
+
+#### First Way:
+
+Execute the following command in the project directory:
+
+```bash
 java -jar -DJWT_SECRET=eyJhbGciOiJIUzI1NiJ9 -DDOMAIN=localhost:3306 target/api-0.0.1-SNAPSHOT.jar
 ```
+
+#### Second Way:
+
+1. Add the environment variables in the `launch.json` settings in the `.vscode` directory.
+
+   ```json
+   {
+       "type": "java",
+       "name": "Run Local",
+       "request": "launch",
+       "mainClass": "com.caio.alura.api.DegreeApplication",
+       "projectName": "rest-api-template-java",
+       "env": {
+           "JWT_SECRET": "eyJhbGciOiJIUzI1NiJ9",
+           "DOMAIN": "localhost:3306"
+       }
+   }
+   ```
+
+2. Run locally using the VSCode menu:
+   - Select the configuration "Run Local" from the VSCode toolbar.
+   - Start the debugging session.
+
+Ensure that the MySQL server is up and running before executing the application. Choose the method that best suits your workflow, and access the API at http://localhost:8080.
 
 ## Run docker
 To run the application using Docker, execute the following commands in the project directory:
