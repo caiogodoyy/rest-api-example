@@ -1,5 +1,7 @@
 package com.caio.alura.api.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,15 +25,21 @@ import jakarta.validation.Valid;
 @SecurityRequirement(name = "bearer-key")
 public class MeetingController {
 
+    private final Logger logger = LoggerFactory.getLogger(MeetingController.class);
+
     @Autowired
     private MeetingService meetingService;
     
     @PostMapping
     @Transactional
     public ResponseEntity<MeetingRegisterReturnData> scheduleMeeting(@RequestBody @Valid MeetingUserInputData userInput) {
+        logger.info(".scheduleMeeting: Received POST request for /meeting");
+
         var data = new MeetingRegisterData(userInput);
 
         var returnData = this.meetingService.schedule(data);
+
+        logger.info(".scheduleMeeting: Responded with 201 status for POST request to /meeting");
 
         return ResponseEntity.ok(returnData);
     }
@@ -39,8 +47,11 @@ public class MeetingController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> cancelMeeting(@PathVariable Long id) {
+        logger.info(".cancelMeeting: Received DELETE request for /meeting/" + id);
+
         this.meetingService.cancel(id);
 
+        logger.info(".cancelMeeting: Responded with 203 status for DELETE request to /meeting");
         return ResponseEntity.noContent().build();
     }
     

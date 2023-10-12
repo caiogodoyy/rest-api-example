@@ -9,20 +9,29 @@
             "name": "DegreeApplication",
             "request": "launch",
             "mainClass": "com.caio.alura.api.DegreeApplication",
-            "projectName": "degree"
-        },
-        {
-            "type": "java",
-            "name": "Current File",
-            "request": "launch",
-            "mainClass": "${file}"
+            "projectName": "api",
+            "env": {
+                "DOMAIN": "localhost:3306"
+            }
         },
         {
             "type": "java",
             "name": "DegreeApplication",
             "request": "launch",
             "mainClass": "com.caio.alura.api.DegreeApplication",
-            "projectName": "api"
+            "projectName": "degree",
+            "env": {
+                "DOMAIN": "localhost:3306"
+            }
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "env": {
+                "DOMAIN": "localhost:3306"
+            }
         }
     ]
 }
