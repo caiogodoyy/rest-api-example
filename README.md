@@ -1,6 +1,16 @@
 # Spring Boot REST API Exercise Project
 Developed during the "Spring Boot 3: Developing a REST API in Java" course on Alura. The project focuses on building a simple RESTful API using Spring Boot.
 
+## Spring Initializr Dependencies
+- Spring Boot DevTools
+- Lombok
+- Spring Web
+- Spring Security
+- Spring Data JPA
+- MySQL Driver
+- Flyway Migration
+- Validation
+
 ## Requirements
 - Java Development Kit (JDK) 17
 - Apache Maven 3.8.4 +
