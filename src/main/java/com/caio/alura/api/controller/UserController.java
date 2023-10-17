@@ -27,11 +27,11 @@ public class UserController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deactivateUser(@PathVariable Long id) {
-        logger.info(".deactivateUser: Received DELETE request for /user/{}", id);
+        logger.info(".deactivateUser: Received DELETE request for /user/" + id);
 
         this.userService.inactivateUserById(id);
 
-        logger.info(".deactivateUser: Responded with 203 status for POST request to /user/{}", id);
+        logger.info(".deactivateUser: Responded with 203 status for POST request to /user/" + id);
         return ResponseEntity.noContent().build();
     }
 

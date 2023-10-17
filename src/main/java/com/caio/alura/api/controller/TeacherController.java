@@ -69,7 +69,7 @@ public class TeacherController {
 
         var teacher = this.teacherService.getTeacherById(id);
 
-        logger.info(".getTeacher: Responded with 200 status for GET request to /teacher/{}", id);
+        logger.info(".getTeacher: Responded with 200 status for GET request to /teacher/" + id);
         return ResponseEntity.ok(new TeacherRegisterReturnBody(teacher));
     }
 
@@ -80,7 +80,7 @@ public class TeacherController {
 
         this.teacherService.inactivateTeacherById(id);
 
-        logger.info(".inactivateTeacher: Responded with 203 status for DELETE request to /teacher/{}", id);
+        logger.info(".inactivateTeacher: Responded with 203 status for DELETE request to /teacher/" + id);
         return ResponseEntity.noContent().build();
     }
 

@@ -20,37 +20,37 @@ public class StudentService {
     private StudentRepository studentRepository;
 
     public void saveStudent(Student student) {
-        logger.info(".saveStudent: Saving student {}", student.getName());
+        logger.info(".saveStudent: Saving student " + student.getName());
         this.studentRepository.save(student);
-        logger.info(".saveStudent: Student {} saved successfully", student.getName());
+        logger.info(".saveStudent: Student " + student.getName() + " saved successfully");
     }
 
     public Page<StudentRegisterReturnBody> getAllActiveStudents(Pageable pageable) {
         logger.info(".getAllActiveStudents: Getting all active students");
         Page<StudentRegisterReturnBody> result = this.studentRepository.findAllByActiveTrue(pageable).map(StudentRegisterReturnBody::new);
-        logger.info(".getAllActiveStudents: Received {} active students", result.getTotalElements());
+        logger.info(".getAllActiveStudents: Received " + result.getTotalElements() + " active students");
         return result;
     }
 
     public Student getStudentById(Long id) {
-        logger.info(".getStudentById: Getting student by id {}", id);
+        logger.info(".getStudentById: Getting student by id " + id);
         return this.studentRepository.getReferenceById(id);
     }
 
     public void inactivateStudentById(Long id) {
-        logger.info(".inactivateStudentById: Inactivating student with id {}", id);
+        logger.info(".inactivateStudentById: Inactivating student with id " + id);
         var student = this.studentRepository.getReferenceById(id);
         student.deactivate();
-        logger.info(".inactivateStudentById: Student inactivated successfully with id {}", id);
+        logger.info(".inactivateStudentById: Student inactivated successfully with id " + id);
     }
 
     public boolean exists(Long id) {
-        logger.info(".exists: Checking if student with id {} exists", id);
+        logger.info(".exists: Checking if student with id " + id + " exists");
         return this.studentRepository.existsById(id);
     }
 
     public Boolean isActive(Long id) {
-        logger.info(".isActive: Checking if student with id {} is active", id);
+        logger.info(".isActive: Checking if student with id " + id + " is active");
         return this.studentRepository.getReferenceById(id).getActive();
     }
 

@@ -17,20 +17,20 @@ public class UserService {
     private UserRepository userRepository;
 
     public void saveUser(User user) {
-        logger.info(".saveUser: Saving user {}", user.getUsername());
+        logger.info(".saveUser: Saving user " + user.getUsername());
 
         this.userRepository.save(user);
 
-        logger.info(".saveUser: User {} saved successfully", user.getUsername());
+        logger.info(".saveUser: User " + user.getUsername() + " saved successfully");
     }
 
     public void inactivateUserById(Long id) {
-        logger.info(".inactivateUserById: Inactivating user with id {}", id);
+        logger.info(".inactivateUserById: Inactivating user with id " + id);
 
         var user = this.userRepository.getReferenceById(id);
         user.deactivate();
 
-        logger.info(".inactivateUserById: User {} inactivated successfully", user.getUsername());
+        logger.info(".inactivateUserById: User " + user.getUsername() + " inactivated successfully");
     }
     
 }

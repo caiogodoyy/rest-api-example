@@ -34,16 +34,15 @@ public class MeetingService {
     private List<MeetingValidation> meetingValidations;
 
     public MeetingRegisterReturnData schedule(MeetingRegisterData data) {
-        logger.info(".schedule: Scheduling meeting for studentId {} and teacherId {} at dateTime {}",
-                data.studentId(), data.teacherId(), data.dateTime());
+        logger.info(".schedule: Scheduling meeting for studentId " + data.studentId() + " and teacherId " + data.teacherId() + " at dateTime " + data.dateTime());
 
         if (data.teacherId() != null && !this.teacherService.exists(data.teacherId())) {
-            logger.error(".schedule: Teacher with id {} does not exist", data.teacherId());
+            logger.error(".schedule: Teacher with id " + data.teacherId() + " does not exist");
             throw new ValidationException("Teacher does not exist");
         }
 
         if (!this.studentService.exists(data.studentId())) {
-            logger.error(".schedule: Student with id {} does not exist", data.studentId());
+            logger.error(".schedule: Student with id " + data.studentId() + " does not exist");
             throw new ValidationException("Student does not exist");
         }
 
@@ -61,7 +60,7 @@ public class MeetingService {
 
         this.meetingRepository.save(meeting);
 
-        logger.info(".schedule: Meeting scheduled successfully with id {}", meeting.getId());
+        logger.info(".schedule: Meeting scheduled successfully with id " + meeting.getId());
 
         return new MeetingRegisterReturnData(meeting);
     }
@@ -78,9 +77,9 @@ public class MeetingService {
     }
 
     public void cancel(Long id) {
-        logger.info(".cancel: Canceling meeting with id {}", id);
+        logger.info(".cancel: Canceling meeting with id " + id);
         var meeting = this.meetingRepository.getReferenceById(id);
         this.meetingRepository.delete(meeting);
-        logger.info(".cancel: Meeting canceled successfully with id {}", id);
+        logger.info(".cancel: Meeting canceled successfully with id " + id);
     }
 }

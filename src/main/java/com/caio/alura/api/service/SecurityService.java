@@ -20,15 +20,15 @@ public class SecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.info(".loadUserByUsername: Loading user by username {}", username);
+        logger.info(".loadUserByUsername: Loading user by username " + username);
         UserDetails user = this.userRepository.findByUsernameAndActiveTrue(username);
         
         if (user == null) {
-            logger.error(".loadUserByUsername: User not found for username {}", username);
+            logger.error(".loadUserByUsername: User not found for username " + username);
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
 
-        logger.info(".loadUserByUsername: User loaded successfully for username {}", username);
+        logger.info(".loadUserByUsername: User loaded successfully for username " + username);
         return user;
     }
 }
