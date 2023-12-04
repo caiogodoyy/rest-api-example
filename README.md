@@ -34,16 +34,6 @@ mvn clean package -DskipTests
 
 To run the application, ensure that the MySQL server is running either locally or in a container, and that there exists a table called `alura` and another table called `alura_test`.
 
-#### First Way:
-
-Execute the following command in the project directory:
-
-```bash
-java -jar -DJWT_SECRET=<your_secret> -DDATASOURCE_URL=<your_database_host>:<your_database_port> -DDATASOURCE_USERNAME=<your_database_username> -DDATASOURCE_PASSWORD=<your_database_password> target/api-0.0.1-SNAPSHOT.jar
-```
-
-#### Second Way:
-
 1. Add the environment variables in the `launch.json` settings in the `.vscode` directory.
 
    ```json
@@ -57,7 +47,11 @@ java -jar -DJWT_SECRET=<your_secret> -DDATASOURCE_URL=<your_database_host>:<your
            "JWT_SECRET": "<your_secret>",
            "DATASOURCE_URL": "<your_database_host>:<your_database_port>",
            "DATASOURCE_USERNAME": "<your_database_username>",
-           "DATASOURCE_PASSWORD": "<your_database_password>"
+           "DATASOURCE_PASSWORD": "<your_database_password>",
+           "JAVA_TOOL_OPTIONS": "-javaagent:./opentelemetry-javaagent.jar",
+           "OTEL_SERVICE_NAME": "rest-api-template-java",
+           "OTEL_TRACES_EXPORTER": "jaeger",
+           "OTEL_EXPORTER_JAEGER_ENDPOINT": "<your_jaeger_endpoint>"
        }
    }
    ```
@@ -66,16 +60,4 @@ java -jar -DJWT_SECRET=<your_secret> -DDATASOURCE_URL=<your_database_host>:<your
    - Right-click the DegreeApplication project folder in the Explorer view.
    - Select Run Java.
 
-Ensure that the MySQL server is up and running before executing the application. Choose the method that best suits your workflow, and access the API at http://localhost:8080.
-
-## Run docker
-
-To run the application, ensure that the MySQL server is running either locally or in a container, and that there exists a table called `alura` and another table called `alura_test`.
-
-Execute the following commands in the project directory:
-
-```bash
-docker build -t api-template-image .
-docker run --name api-template -p 8080:8080 -e JWT_SECRET=<your_secret> -e DATASOURCE_URL=<your_database_host>:<your_database_port> -e DATASOURCE_USERNAME=<your_database_username> -e DATASOURCE_PASSWORD=<your_database_password> api-template-image
-```
-Now, you can access the API at http://localhost:8080.
+Ensure that the MySQL server AND Jaeger are up and running before executing the application. Choose the method that best suits your workflow, and access the API at http://localhost:8080.
