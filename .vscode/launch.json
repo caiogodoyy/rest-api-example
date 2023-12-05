@@ -6,31 +6,19 @@
     "configurations": [
         {
             "type": "java",
-            "name": "DegreeApplication",
+            "name": "Run Local",
             "request": "launch",
             "mainClass": "com.caio.alura.api.DegreeApplication",
             "projectName": "api",
             "env": {
-                "DOMAIN": "localhost:3306"
-            }
-        },
-        {
-            "type": "java",
-            "name": "DegreeApplication",
-            "request": "launch",
-            "mainClass": "com.caio.alura.api.DegreeApplication",
-            "projectName": "degree",
-            "env": {
-                "DOMAIN": "localhost:3306"
-            }
-        },
-        {
-            "type": "java",
-            "name": "Current File",
-            "request": "launch",
-            "mainClass": "${file}",
-            "env": {
-                "DOMAIN": "localhost:3306"
+                "JWT_SECRET": "secret",
+                "DATASOURCE_URL": "jdbc:mysql://localhost:3306/alura",
+                "DATASOURCE_USERNAME": "root",
+                "DATASOURCE_PASSWORD": "root",
+                "JAVA_TOOL_OPTIONS": "-javaagent:./opentelemetry-javaagent.jar",
+                "OTEL_SERVICE_NAME": "rest-api-template-java",
+                "OTEL_TRACES_EXPORTER": "jaeger",
+                "OTEL_EXPORTER_JAEGER_ENDPOINT": "http://localhost:14250"
             }
         }
     ]
